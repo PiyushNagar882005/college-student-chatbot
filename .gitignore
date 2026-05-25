@@ -101,3 +101,10 @@ build/
 
 users.json
 chat_history.json
+venv/
+__pycache__/
+node_modules/
+chroma_db/
+.chromadb/
+*.sqlite3
+.env

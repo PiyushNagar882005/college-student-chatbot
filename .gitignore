@@ -32,7 +32,7 @@ instance/
 # VECTOR DATABASE
 # =========================
 
-backend/vector_db/
+
 backend/chroma_db/
 *.bin
 

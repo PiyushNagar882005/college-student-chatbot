@@ -41,7 +41,7 @@ async function sendMessage() {
 
         const response =
             await fetch(
-                "http://127.0.0.1:5000/chat",
+                `${BACKEND_URL}/chat`,
                 {
 
                     method: "POST",
@@ -178,7 +178,7 @@ async function loadHistory() {
 
         const response =
             await fetch(
-                `http://127.0.0.1:5000/history/${username}`
+                `${BACKEND_URL}/history/${username}`
             );
 
         const chats =
@@ -332,7 +332,7 @@ async function deleteChat(chatId) {
 
         const response =
             await fetch(
-                `http://127.0.0.1:5000/delete-chat/${chatId}`,
+                `${BACKEND_URL}/delete-chat/${chatId}`,
                 {
 
                     method: "DELETE"
@@ -401,7 +401,7 @@ async function uploadPDF() {
 
         const response =
             await fetch(
-                "http://127.0.0.1:5000/upload-pdf",
+                `${BACKEND_URL}/upload-pdf`,
                 {
 
                     method: "POST",

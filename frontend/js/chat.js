@@ -33,7 +33,7 @@ async function sendMessage() {
     try{
 
         const response = await fetch(
-            "http://127.0.0.1:5000/chat",
+            `${BACKEND_URL}/chat`,
             {
                 method:"POST",
 
@@ -96,7 +96,7 @@ async function uploadPDF(){
     try{
 
         const response = await fetch(
-            "http://127.0.0.1:5000/upload-pdf",
+            `${BACKEND_URL}/upload-pdf`,
             {
                 method:"POST",
                 body:formData

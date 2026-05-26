@@ -370,59 +370,99 @@ async function deleteChat(chatId) {
 
 
 /* ========================= */
+/* Handle File Selection */
+/* ========================= */
+
+function handleFileSelect(event) {
+
+    const files = event.target.files;
+
+    if (files && files.length > 0) {
+
+        closeUploadMenu();
+
+        uploadPDF(files[0]);
+    }
+}
+
+
+/* ========================= */
 /* PDF UPLOAD */
 /* ========================= */
 
-async function uploadPDF() {
-
-    const file =
-        document.getElementById(
-            "pdfFile"
-        ).files[0];
+async function uploadPDF(file) {
 
     if (!file) {
 
-        alert("Select PDF");
+        alert("Please select a PDF file");
 
         return;
     }
 
+    // Check if file is PDF
+    if (file.type !== "application/pdf") {
 
-    const formData =
-        new FormData();
+        alert("Please select a valid PDF file");
 
-    formData.append(
-        "file",
-        file
-    );
-
+        return;
+    }
 
     try {
 
-        const response =
-            await fetch(
-                `${BACKEND_URL}/upload-pdf`,
-                {
+        console.log(
+            "Uploading PDF:",
+            file.name
+        );
 
-                    method: "POST",
+        const formData = new FormData();
 
-                    body: formData
-                }
+        formData.append("file", file);
+
+        const response = await fetch(
+            `${BACKEND_URL}/upload-pdf`,
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        if (!response.ok) {
+
+            const errorData = 
+                await response.json();
+
+            throw new Error(
+                errorData.error || 
+                `HTTP error! status: ${response.status}`
             );
+        }
 
+        const data = await response.json();
 
-        const data =
-            await response.json();
+        console.log(
+            "Upload response:",
+            data
+        );
 
-        console.log(data);
+        alert(
+            data.message ||
+            "PDF uploaded successfully!"
+        );
 
-        alert(data.message);
+        // Clear the file input
+        document.getElementById("pdfFile").value = "";
 
     } catch(error) {
 
-        console.log(error);
+        console.error(
+            "Upload error:",
+            error
+        );
 
-        alert("Upload failed");
+        alert(
+            "Upload failed: " +
+            error.message
+        );
     }
 }
 
@@ -470,8 +510,123 @@ window.onload = () => {
         }
     );
 };
+// Toggle upload dropdown
+function toggleUploadMenu() {
+    const menu = document.getElementById("uploadMenu");
+
+    if (menu.style.display === "block") {
+        menu.style.display = "none";
+    } else {
+        menu.style.display = "block";
+    }
+}
+
+
+// Handle PDF selection
+async function handleFileSelect(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    // Show selected file name
+    console.log("Selected file:", file.name);
+
+    const formData = new FormData();
+    formData.append("pdf", file);
+
+    try {
+
+        const response = await fetch("http://localhost:5000/upload", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        alert(data.message || "PDF uploaded successfully!");
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Upload failed");
+
+    }
+}
+// ==========================================
+// TOGGLE UPLOAD MENU
+// ==========================================
+
+function toggleUploadMenu() {
+
+    const menu = document.getElementById("uploadMenu");
+
+    menu.classList.toggle("show");
+}
+
+
+// ==========================================
+// HANDLE PDF UPLOAD
+// ==========================================
+
+async function handleFileSelect(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+
+    // Check PDF
+    if (!file.name.endsWith(".pdf")) {
+
+        alert("Please upload PDF only");
+
+        return;
+    }
+
+
+    const formData = new FormData();
+
+    // IMPORTANT
+    formData.append("file", file);
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/upload-pdf",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        const data = await response.json();
+
+        console.log(data);
+
+
+        if (response.ok) {
+
+            alert("PDF uploaded successfully");
+
+        } else {
+
+            alert(data.error || "Upload failed");
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Server error");
+    }
+}
 
 window.sendMessage = sendMessage;
 window.newChat = newChat;
 window.uploadPDF = uploadPDF;
+window.handleFileSelect = handleFileSelect;
 window.logout = logout;

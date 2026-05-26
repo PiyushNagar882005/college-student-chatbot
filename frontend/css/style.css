@@ -369,3 +369,57 @@ body {
 
     transform: translateX(5px);
 }
+.upload-menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 1000;
+}
+
+.upload-option {
+    cursor: pointer;
+    padding: 10px;
+}
+
+.upload-option:hover {
+    background: #f1f1f1;
+}
+/* ==========================================
+UPLOAD MENU
+========================================== */
+
+.upload-wrapper {
+    position: relative;
+}
+
+.upload-menu {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    background: white;
+    border-radius: 10px;
+    width: 180px;
+    display: none;
+    padding: 10px;
+    z-index: 1000;
+}
+
+.upload-menu.show {
+    display: block;
+}
+
+.upload-option {
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    color: black;
+}
+
+.upload-option:hover {
+    background: #f1f1f1;
+}

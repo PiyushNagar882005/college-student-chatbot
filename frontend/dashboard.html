@@ -124,22 +124,23 @@
                             class="upload-menu"
                         >
 
-                            <label
-                                for="pdfFile"
+                            <div
                                 class="upload-option"
+                                onclick="document.getElementById('pdfFile').click()"
                             >
 
                                 <i class="fa-solid fa-file-pdf"></i>
 
                                 Upload PDF
 
-                            </label>
+                            </div>
 
                             <input
                                 type="file"
                                 id="pdfFile"
                                 accept=".pdf"
                                 hidden
+                                onchange="handleFileSelect(event)"
                             >
 
                         </div>

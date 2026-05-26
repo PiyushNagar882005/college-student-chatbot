@@ -16,6 +16,23 @@ function toggleUploadMenu() {
 
 
 /* ========================= */
+/* Close Upload Menu */
+/* ========================= */
+
+function closeUploadMenu() {
+
+    const menu =
+        document.getElementById(
+            "uploadMenu"
+        );
+
+    menu.classList.remove(
+        "show"
+    );
+}
+
+
+/* ========================= */
 /* Close menu on document click */
 /* ========================= */
 
@@ -28,35 +45,17 @@ document.addEventListener(
                 ".upload-wrapper"
             );
 
-        if (!uploadWrapper.contains(e.target)) {
+        if (uploadWrapper && !uploadWrapper.contains(e.target)) {
 
-            const menu =
-                document.getElementById(
-                    "uploadMenu"
-                );
-
-            menu.classList.remove(
-                "show"
-            );
+            closeUploadMenu();
         }
     }
 );
 
 
 /* ========================= */
-/* Handle PDF file selection */
+/* Export Global Functions */
 /* ========================= */
 
-document.addEventListener(
-    "change",
-    (e) => {
-
-        if (e.target.id === "pdfFile") {
-
-            if (e.target.files.length > 0) {
-
-                uploadPDF();
-            }
-        }
-    }
-);
+window.toggleUploadMenu = toggleUploadMenu;
+window.closeUploadMenu = closeUploadMenu;
